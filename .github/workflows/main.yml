@@ -1,0 +1,36 @@
+name: SHOUROV-BOT Deployment
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Show Directory Tree (for debug)
+        run: tree -L 2 || ls
+
+      - name: Check for .env file
+        run: |
+          if [ ! -f ".env" ]; then
+            echo ".env file not found, skipping..."
+          fi
+
+      - name: Run Bot (preview)
+        run: |
+          echo "✅ SHOUROV-BOT setup complete. You can add custom deploy scripts here."
